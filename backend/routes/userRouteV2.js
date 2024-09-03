@@ -1,5 +1,5 @@
 import express from "express";
-import {getUsersV2, getUserByIdV2, saveUserV2, updateUserV2, deleteUserV2} from "../controller/userControllerV2.js";
+import { getUsersV2, getUserByIdV2, saveUserV2, updateUserV2, deleteUserV2 } from "../controller/userControllerV2.js";
 const router2 = express.Router();
 
 router2.get('/users/apiv2', getUsersV2);
