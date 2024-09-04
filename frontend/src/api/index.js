@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/v1';
+const API_URL = 'http://localhost:5000/api/v2';
 
 export const getProducts = () => axios.get(API_URL);
 export const getProductById = (id) => axios.get(`${API_URL}/${id}`);

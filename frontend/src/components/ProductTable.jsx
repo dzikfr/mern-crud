@@ -24,7 +24,7 @@ const ProductTable = () => {
 
     const handleDelete = async (id) => {
         try {
-            await deleteProducts(id);
+            await deleteProduct(id);
             setData(data.filter((item) => item._id !== id));
         } catch (error) {
             console.error('Error:', error);
