@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { saveUserV2, updateUserV2, getUserByIdV2 } from '../api';
+import { createProduct, updateProduct, getProductById } from '../api';
 
 const ProductForm = ({ selectedProductId, onClose }) => {
     const [name, setName] = useState('');
@@ -11,7 +11,7 @@ const ProductForm = ({ selectedProductId, onClose }) => {
         if (selectedProductId) {
             const fetchProduct = async () => {
                 try {
-                    const response = await getUserByIdV2(selectedProductId);
+                    const response = await getProductById(selectedProductId);
                     const product = response.data;
                     setName(product.name);
                     setPrice(product.price);
@@ -30,9 +30,9 @@ const ProductForm = ({ selectedProductId, onClose }) => {
         const product = { name, price, stock };
         try {
             if (isEditing) {
-                await updateUserV2(selectedProductId, product);
+                await updateProduct(selectedProductId, product);
             } else {
-                await saveUserV2(product);
+                await createProduct(product);
             }
             onClose();
         } catch (error) {

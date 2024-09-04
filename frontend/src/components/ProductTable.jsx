@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTable } from 'react-table';
-import { getUsersV2, deleteUserV2 } from '../api';
+import { getProducts, deleteProduct } from '../api';
 import ProductForm from './ProductForm';
 
 const ProductTable = () => {
@@ -12,7 +12,7 @@ const ProductTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getUsersV2();
+                const response = await getProducts();
                 setData(response.data);
                 setLoading(false);
             } catch (error) {
@@ -24,7 +24,7 @@ const ProductTable = () => {
 
     const handleDelete = async (id) => {
         try {
-            await deleteUserV2(id);
+            await deleteProducts(id);
             setData(data.filter((item) => item._id !== id));
         } catch (error) {
             console.error('Error:', error);
@@ -47,7 +47,7 @@ const ProductTable = () => {
 
         const fetchData = async () => {
             try {
-                const response = await getUsersV2();
+                const response = await getProducts();
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
