@@ -1,6 +1,6 @@
-import User from "../models/userModel.js";
+import User from "../models/userModelV2.js";
 
-export const getUsersV2 = async (req, res) => {
+export const getAllProductsV2 = async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -9,7 +9,7 @@ export const getUsersV2 = async (req, res) => {
     }
 }
 
-export const getUserByIdV2 = async (req, res) => {
+export const getProductByIdV2 = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         res.json(user);
@@ -18,7 +18,7 @@ export const getUserByIdV2 = async (req, res) => {
     }
 }
 
-export const saveUserV2 = async (req, res) => {
+export const createProductV2 = async (req, res) => {
     const user = new User(req.body);
     try {
         const insertedUser = await user.save();
@@ -28,7 +28,7 @@ export const saveUserV2 = async (req, res) => {
     }
 }
 
-export const updateUserV2 = async (req, res) => {
+export const updateProductV2 = async (req, res) => {
     try {
         const updatedUser = await User.updateOne({_id:req.params.id}, {$set: req.body});
         res.status(200).json(updatedUser);
@@ -37,7 +37,7 @@ export const updateUserV2 = async (req, res) => {
     }
 }
 
-export const deleteUserV2 = async (req, res) => {
+export const deleteProductV2 = async (req, res) => {
     try {
         const deletedUser = await User.deleteOne({_id:req.params.id});
         res.status(201).json(deletedUser);

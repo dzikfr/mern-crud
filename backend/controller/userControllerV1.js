@@ -1,65 +1,57 @@
-// import { getDB } from '../database/dbV1';
-// import { ObjectId } from 'mongodb';
+import { userModelV1 } from '../models/userModelV1.js';
 
-// export const getUsersV1 = async (req, res) => {
-//     try {
-//         const db = getDB();
-//         const users = await db.collection('users').find().toArray();
-//         res.json(users);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
+export async function getAllProductsV1(req, res) {
+  try {
+    const products = await (await userModelV1()).find().toArray();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
-// export const getUserByIdV1 = async (req, res) => {
-//     try {
-//         const db = getDB();
-//         const user = await db.collection('users').findOne({ _id: new ObjectId(req.params.id) });
-//         if (!user) {
-//             return res.status(404).json({ message: 'User tidak ditemukan' });
-//         }
-//         res.json(user);
-//     } catch (error) {
-//         res.status(404).json({ message: error.message });
-//     }
-// };
+export async function getProductByIdV1(req, res) {
+  try {
+    const id = req.params.id;
+    const product = await (await userModelV1()).findOne({ _id: new ObjectId(id) });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
-// export const saveUserV1 = async (req, res) => {
-//     try {
-//         const db = getDB();
-//         const user = req.body;
-//         const result = await db.collection('users').insertOne(user);
-//         res.status(201).json({ _id: result.insertedId, ...user });
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// };
+export async function createProductV1(req, res) {
+  try {
+    const { name, price, stock } = req.body;
+    const result = await (await userModelV1()).insertOne({ name, price, stock });
+    res.status(201).json(result.ops[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
-// export const updateUserV1 = async (req, res) => {
-//     try {
-//         const db = getDB();
-//         const result = await db.collection('users').updateOne(
-//             { _id: new ObjectId(req.params.id) },
-//             { $set: req.body }
-//         );
-//         if (result.matchedCount === 0) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         res.status(200).json({ message: 'User updated' });
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// };
+export async function updateProductV1(req, res) {
+  try {
+    const id = req.params.id;
+    const { name, price, stock } = req.body;
+    const result = await (await userModelV1()).updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { name, price, stock } }
+    );
+    if (result.matchedCount === 0) return res.status(404).json({ error: 'Product not found' });
+    res.status(200).json({ message: 'Product updated' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
-// export const deleteUserV1 = async (req, res) => {
-//     try {
-//         const db = getDB();
-//         const result = await db.collection('users').deleteOne({ _id: new ObjectId(req.params.id) });
-//         if (result.deletedCount === 0) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         res.status(200).json({ message: 'User deleted' });
-//     } catch (error) {
-//         res.status(400).json({ message: error.message });
-//     }
-// };
+export async function deleteProductV1(req, res) {
+  try {
+    const id = req.params.id;
+    const result = await (await userModelV1()).deleteOne({ _id: new ObjectId(id) });
+    if (result.deletedCount === 0) return res.status(404).json({ error: 'Product not found' });
+    res.status(200).json({ message: 'Product deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

@@ -1,11 +1,11 @@
 import express from "express";
-import { getUsersV2, getUserByIdV2, saveUserV2, updateUserV2, deleteUserV2 } from "../controller/userControllerV2.js";
+import { getAllProductsV2, getProductByIdV2, createProductV2, updateProductV2, deleteProductV2 } from "../controller/userControllerV2.js";
 const router2 = express.Router();
 
-router2.get('/users/apiv2', getUsersV2);
-router2.get('/users/apiv2/:id', getUserByIdV2);
-router2.post('/users/apiv2', saveUserV2);
-router2.patch('/users/apiv2/:id', updateUserV2);
-router2.delete('/users/apiv2/:id', deleteUserV2);
+router2.get('/', getAllProductsV2);
+router2.get('/:id', getProductByIdV2);
+router2.post('/', createProductV2);
+router2.patch('/:id', updateProductV2);
+router2.delete('/:id', deleteProductV2);
 
 export default router2;
